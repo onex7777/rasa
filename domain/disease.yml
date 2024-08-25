@@ -1,0 +1,182 @@
+version: '3.1'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- disease_symptom:
+    use_entities: true
+- symptom_disease:
+    use_entities: true
+- disease_check:
+    use_entities: true
+- check_disease:
+    use_entities: true
+- disease_prevent:
+    use_entities: true
+- disease_lasttime:
+    use_entities: true
+- disease_cureway:
+    use_entities: true
+- disease_cureprob:
+    use_entities: true
+- disease_easyget:
+    use_entities: true
+- disease_desc:
+    use_entities: true
+- disease_cause:
+    use_entities: true
+- disease_acompany:
+    use_entities: true
+- food_do_disease:
+    use_entities: true
+- disease_drug:
+    use_entities: true
+- drug_disease:
+    use_entities: true
+- disease_not_food:
+    use_entities: true
+- disease_do_food:
+    use_entities: true
+- disease_department:
+    use_entities: true
+- food_not_disease:
+    use_entities: true
+- query_premise:
+    use_entities: true
+- smallTalk:
+    use_entities: []
+- get_nutrient:
+    use_entities: true
+
+entities:
+- disease
+- check
+- drug
+- food
+- symptom
+- location
+- date-time
+
+
+slots:
+  disease:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: disease
+    influence_conversation: true
+  check:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: check
+    influence_conversation: true
+  drug:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: drug
+      
+    influence_conversation: true
+  food:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: food
+      
+    influence_conversation: true
+  symptom:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: symptom
+      
+    influence_conversation: true
+
+  location:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: location
+    influence_conversation: false
+  date-time:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: date-time
+    influence_conversation: false
+
+
+
+responses:
+
+  utter_iamabot:
+    - text: 你好,我是小丸你的私人助手,请问有什么可以帮您的吗?
+  utter_help:
+  - text: 荣幸之至,有什么可以帮您的吗？
+  utter_out:
+  - text: 对不起,小丸暂时理解不了你的意思
+  utter_over:
+  - text: 还有什么可以帮您的吗
+  utter_exception:
+  - text: 小丸,遇到了一些未知错误请联系管理员
+  utter_default:
+    - text: 抱歉，我没有明白您的意思。请尝试用其他方式描述您的问题。
+    - text: 对不起，我没能理解您的问题。请重新表述一下您的问题。
+    - text: 不好意思，我无法理解您的问题。请提供更多详细信息以便我帮助您。
+  utter_ask_location:
+    - text: 您想查询哪个地方
+  utter_ask_date-time:
+    - text: 您想查询什么时间
+
+
+actions:
+- FindTheCorrespondingSymptom
+- FindTheCorrespondingFood
+- FindTheCorrespondingDrug
+- FindTheCorrespondingCheck
+- FindTheCorrespondingDisease
+- action_default_fallback
+- action_local_llm
+- utter_iamabot
+- utter_help
+- utter_out
+- utter_over
+- utter_exception
+- utter_default
+- utter_ask_location
+- utter_ask_date-time
+
+
+
+
+
+forms:
+  disease_form:
+    required_slots:
+      - disease
+  check_form:
+    required_slots:
+      - check
+  food_form:
+    required_slots:
+      - food
+  drug_form:
+    required_slots:
+      - drug
+  symptom_form:
+    required_slots:
+      - symptom
+
+
+
+e2e_actions: []

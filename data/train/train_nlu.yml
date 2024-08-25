@@ -1,0 +1,104 @@
+version: "3.1"
+nlu:
+  - intent: train_ticket
+    examples: |
+      - 查寻[上海]{"entity": "address", "role": "departure"}到[北京]{"entity": "address", "role": "destination"}的火车票
+      - 帮我查一下[明天](date-time)去[郑州]{"entity": "address", "role": "destination"}的火车票
+      - 查询[广州]{"entity": "address", "role": "departure"}到[北京]{"entity": "address", "role": "destination"}的火车
+      - 从[广州]{"entity": "address", "role": "departure"}到[南昌]{"entity": "address", "role": "destination"}的火车票时刻表
+      - 查一下从[杭州]{"entity": "address", "role": "departure"}到[上海]{"entity": "address", "role": "destination"}高铁时刻表
+      - 查一下从[广州]{"entity": "address", "role": "departure"}到[南宁]{"entity": "address", "role": "destination"}的火车票
+      - 有没有[徐州]{"entity": "address", "role": "departure"}到[洛阳]{"entity": "address", "role": "destination"}的火车票
+      - 查询[临沂]{"entity": "address", "role": "departure"}到[济南]{"entity": "address", "role": "destination"}的火车票
+      - [连云港]{"entity": "address", "role": "departure"}到[徐州]{"entity": "address", "role": "destination"}的火车票
+      - [开封]{"entity": "address", "role": "departure"}到[信阳]{"entity": "address", "role": "destination"}的火车
+      - 帮我查下[上海]{"entity": "address", "role": "departure"}到[合肥]{"entity": "address", "role": "destination"}的火车
+      - 帮我查一下[宁波]{"entity": "address", "role": "departure"}到[郑州]{"entity": "address", "role": "destination"}的火车
+      - [星期四](date-time)去[上海]{"entity": "address", "role": "destination"}的火车
+      - [重庆]{"entity": "address", "role": "departure"}到[成都]{"entity": "address", "role": "destination"}的火车票多少钱
+      - 从[余姚]{"entity": "address", "role": "departure"}到[贵阳]{"entity": "address", "role": "destination"}的火车票
+      - [北京]{"entity": "address", "role": "departure"}到[上海]{"entity": "address", "role": "destination"}的火车票
+      - 查询[湛江]{"entity": "address", "role": "departure"}到[广州]{"entity": "address", "role": "destination"}的火车票
+      - 查一下[明天](date-time)下午[南通]{"entity": "address", "role": "departure"}到[南京]{"entity": "address", "role": "destination"}的火车票
+      - 帮我查一下从[开封]{"entity": "address", "role": "departure"}到[郑州]{"entity": "address", "role": "destination"}的火车几点发
+      - [烟台]{"entity": "address", "role": "departure"}到[齐齐哈尔]{"entity": "address", "role": "destination"}的火车票
+      - 查询[广州]{"entity": "address", "role": "departure"}到[贵港]{"entity": "address", "role": "destination"}的火车
+      - 去[南昌]{"entity": "address", "role": "destination"}的火车
+      - [杭州]{"entity": "address", "role": "departure"}到[北京]{"entity": "address", "role": "destination"}的火车班次
+      - [明天](date-time)[广州]{"entity": "address", "role": "departure"}到[长葛]{"entity": "address", "role": "destination"}的火车
+      - 帮我定一张[今天](date)[广州]{"entity": "address", "role": "departure"}到[北京]{"entity": "address", "role": "destination"}的车票
+      - 帮我定一张[明天](date)[上海]{"entity": "address", "role": "departure"}去[南昌]{"entity": "address", "role": "destination"}的车票
+      - 帮我定一张去[深圳]{"entity": "address", "role": "destination"}的火车票
+      - 帮我定一张[今天](date)的车票
+      - 帮我定张[今天](date)从[南京]{"entity": "address", "role": "departure"}出发的车票
+      - 帮我定一张从[抚州]{"entity": "address", "role": "departure"}出发的车票
+
+  - intent: info_address
+    examples: |
+      - 告诉我[广州](address)怎么样
+      - [广州](address)
+      - 那么[辽宁](address)呢
+      - [北京](address)啥情况
+      - [厦门](address)怎么样
+      - [武汉](address)呢
+      - [香港](address)呢
+      - 我在[杭州](address)
+      - [上海](address)
+      - 在[宁波](address)呢
+      - [宁波](address)
+      - [首都](address)
+      - [深圳](address)
+      - [南昌](address)
+      - [福州](address)
+      - [抚州](address)
+      - [厦门](address)怎么样
+      - [北京](address)怎么样
+      - [山东](address)怎么样
+      - [武汉](address)怎么样
+      - 那么[江西](address)呢
+      
+
+  - synonym: 北京
+    examples: |
+      - 首都
+  - synonym: 上海
+    examples: |
+      - 魔都
+
+  - intent: info_date
+    examples: |
+      - [明天](date-time)
+      - [后天](date-time)
+      - [大后天](date-time)
+      - [下个星期日](date-time)怎么样
+      - 还需要[昨天](date-time)的
+      - 我还要[昨天](date-time)的
+      - [明天](date-time)如何
+      - [后天](date-time)如何
+      - [星期六](date-time)呢
+      - [后天](date-time)的呢
+      - [明天](date-time)的怎么说
+      - [两天后](date-time)的大概什么样
+      - [前天](date-time)的
+      - 帮我查查[三天前](date-time)
+      - 帮我查查[下星期五](date-time)的
+      - 还要[明天](date-time)的
+      - [后天](date-time)呢
+      - [今天](date-time)是怎样的
+      - [上午](date-time)怎样的
+      - [晚上](date-time)呢
+
+  - synonym: 下个星期一
+    examples: |
+      - 下星期一
+  - synonym: 今天
+    examples: |
+      - 早上
+      - 中午
+      - 晚上
+      - 下午
+      - 傍晚
+      - 今日
+  - synonym: 明天
+    examples: |
+      - 明日

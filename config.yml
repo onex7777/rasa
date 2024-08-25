@@ -1,0 +1,81 @@
+# The config recipe.
+# https://rasa.com/docs/rasa/model-configuration/
+recipe: default.v1
+assistant_id: rasa_bot
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/nlu/components/
+language: zh
+log_level: DEBUG
+
+model:
+  store_type: local
+  local:
+    path: models
+
+pipeline:
+  # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
+  # # If you'd like to customize it, uncomment and adjust the pipeline.
+  # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
+
+  #   dictionary_path: "pipeline/jieba_userdict"
+#  - name: components.jieba_tokenizer.JiebaTokenizer
+#  - name: JiebaTokenizer
+#    token_pattern: (?u)\b\w+\b
+  - name: components.jieba_tokenizer.JiebaTokenizer
+    dictionary_path: "pipeline/jieba_userdict/"
+  - name: LanguageModelFeaturizer
+    model_name: "bert"
+    model_weights: "pipeline/bert-base-chinese"
+  - name: RegexFeaturizer
+    use_word_boundaries: True #中文环境要用
+  - name: RegexEntityExtractor
+    use_word_boundaries: False #中文环境要用
+    use_lookup_tables: True
+    use_regexes: True
+  - name: components.custom_number_extractor.CustomNumberExtractor
+  - name: components.custom_time_extractor.CustomTimeExtractor
+#   - name: source.diet_classifier.DIETClassifier
+  - name: DIETClassifier
+    epochs: 100
+    learning_rate: 0.0008
+    tensorboard_log_directory: ./log
+    tensorboard_log_level: EPOCH
+    constrain_similarities: True
+    url: http://localhost:8000
+  - name: FallbackClassifier
+    threshold: 0.3
+    ambiguity_threshold: 0.05
+  - name: ResponseSelector
+    retrieval_intent: faq
+    epochs: 100
+    learning_rate: 0.001
+    constrain_similarities: True
+    scale_loss: false
+  - name: ResponseSelector
+    retrieval_intent: chitchat
+    epochs: 100
+    learning_rate: 0.001
+    constrain_similarities: True
+    scale_loss: false
+  - name: EntitySynonymMapper
+
+
+# Configuration for Rasa Core.
+# https://rasa.com/docs/rasa/core/policies/
+policies:
+  # # No configuration for policies was provided. The following default policies were used to train your model.
+  # # If you'd like to customize them, uncomment and adjust the policies.
+  # # See https://rasa.com/docs/rasa/policies for more information.
+  - name: AugmentedMemoizationPolicy
+    max_history: 10
+  - name: TEDPolicy
+    max_history: 10
+    epochs: 100
+    batch_size:
+      - 32
+      - 64
+    constrain_similarities: True
+  - name: RulePolicy
+    core_fallback_threshold: 0.3
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: True

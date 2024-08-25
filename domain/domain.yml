@@ -1,0 +1,79 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - stop
+  - mood_great
+  - mood_unhappy
+  - thank_you
+  - chitchat
+  - faq
+
+
+
+
+
+
+# ##################################################
+# responses
+# ##################################################
+responses:
+  utter_greet:
+    - text: Hey! How are you?
+    - text: 你好啊~
+    - text: 我挺好的，你呢
+  utter_cheer_up:
+    - image: https://i.imgur.com/nGF1K8f.jpg
+      text: "Here is something to cheer you up:"
+  utter_did_that_help:
+    - text: 有什么能帮助你的？
+    - text: 很荣幸，有什么能够帮助您嘛？
+  utter_happy:
+    - text: 好啊，来吧！
+  utter_goodbye:
+    - text: 再见~
+    - text: 拜拜啦~
+  utter_thank_you:
+    - text: <(*￣▽￣*)/
+  # 测试
+  # utter_bot_buttons:
+  #   - text: 您想要执行哪个操作？
+  #     buttons:
+  #       - title: "great"
+  #         payload: "/mood_great"
+  #       - title: "super sad"
+  #         payload: "/mood_unhappy"
+  # default
+  utter_default:
+    - text: 抱歉，我没有明白您的意思。请尝试用其他方式描述您的问题。
+    - text: 对不起，我没能理解您的问题。请重新表述一下您的问题。
+    - text: 不好意思，我无法理解您的问题。请提供更多详细信息以便我帮助您。
+  # utter_ask_affirmation:
+  #   - text: "我不太确定我理解您的问题。您是否可以确认一下我是否理解正确？"
+  # utter_ask_rephrase:
+  #   - text: "请尝试用其他方式描述您的问题。"
+
+# ##################################################
+# actions
+# ##################################################
+actions:
+  - action_fallback
+  - action_default_fallback
+  - utter_greet
+  - utter_cheer_up
+  - utter_did_that_help
+  - utter_happy
+  - utter_goodbye
+  - utter_thank_you
+  - utter_default
+  - action_chitchat
+  - action_faq
+
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

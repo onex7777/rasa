@@ -1,0 +1,11 @@
+version: "3.1"
+
+intents:
+  - get_news
+  - get_weibohot
+  - get_toutiaohot
+
+actions:
+  - action_get_news
+  - action_get_weibohot
+  - action_get_toutiaohot

@@ -1,0 +1,17 @@
+version: "3.1"
+
+stories:
+  - story: get news
+    steps:
+      - intent: get_news
+      - action: action_get_news
+
+  - story: get weibohot
+    steps:
+      - intent: get_weibohot
+      - action: action_get_weibohot
+
+  - story: get toutiaohot
+    steps:
+      - intent: get_toutiaohot
+      - action: action_get_toutiaohot

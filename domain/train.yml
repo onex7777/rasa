@@ -1,0 +1,69 @@
+version: "3.1"
+
+session_config:
+  session_expiration_time: 0
+  carry_over_slots_to_new_session: true
+
+intents:
+  - train_ticket
+  - info_address
+  - info_date
+
+
+entities:
+  - date-time
+  - address:
+      roles:
+        - departure
+        - destination
+
+slots:
+  departure:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: address
+        role: departure
+      - type: from_entity
+        entity: address
+        intent: info_address
+
+  destination:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: address
+        role: destination
+      - type: from_entity
+        entity: address
+        intent: info_address
+
+  date-time:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date-time
+
+
+responses:
+  utter_ask_departure:
+    - text: "你想从哪里出发？"
+  utter_ask_destination:
+    - text: "你要去哪里？"
+  utter_ask_date-time:
+    - text: "你想什么时候出发呢？"
+actions:
+  - action_query_train
+  - utter_ask_departure
+  - utter_ask_destination
+  - utter_ask_date-time
+
+forms:
+  train_query_form:
+    required_slots:
+      - departure
+      - destination
+      - date-time
