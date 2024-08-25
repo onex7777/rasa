@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; }
+        .chat-container { width: 80%; margin: 50px auto; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; }
+        #chatbox { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; background-color: #fff; margin-bottom: 10px; border-radius: 5px; }
+        .input-section { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        #inputText { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .progress-bar { width: 100%; height: 5px; background-color: #ddd; margin-top: 10px; border-radius: 5px; }
+        .progress-bar-fill { height: 100%; background-color: #007bff; width: 0%; border-radius: 5px; }
+        audio { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Smart Chatbot Interface</h1>
+        <div id="chatbox"></div>
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Type your message..." rows="2"></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <div class="input-section">
+            <button onclick="startRecording()">Start Recording</button>
+            <button onclick="stopRecording()">Stop Recording</button>
+            <button onclick="playLastMessage()">Play Last Message</button>
+        </div>
+        <div class="progress-bar">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+        <audio id="audioPlayback" controls></audio>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let lastMessageAudioUrl = '';
+        let recordingStartTime;
+        const progressBarFill = document.getElementById('progressBarFill');
+        let recordingInterval;
+
+        function addMessageToChatbox(sender, message) {
+            const chatbox = document.getElementById('chatbox');
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${sender}: ${message}`;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('inputText').value;
+            addMessageToChatbox('User', message);
+
+            fetch('/send_message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessageToChatbox('Bot', data.reply);
+                return fetch('/text_to_speech', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: data.reply })
+                });
+            })
+            .then(response => response.json())
+            .then(data => {
+                lastMessageAudioUrl = data.audio_url;
+                const audioElement = document.getElementById('audioPlayback');
+                audioElement.src = lastMessageAudioUrl;
+                audioElement.play();
+            });
+
+            document.getElementById('inputText').value = "";
+        }
+
+        function startRecording() {
+              // 清空之前的音频数据，在开始录音时执行
+            audioChunks = [];
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = event => {
+                        // 确保每次录音的音频数据推入数组
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+                    mediaRecorder.start();
+                    recordingStartTime = Date.now();
+                    recordingInterval = setInterval(updateProgressBar, 100);
+                });
+        }
+        function stopRecording() {
+            mediaRecorder.stop();
+            mediaRecorder.onstop = () => {
+                clearInterval(recordingInterval);
+                // 创建Blob并播放音频
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                // const audioUrl = URL.createObjectURL(audioBlob);
+                // const audio = new Audio(audioUrl);
+                // audio.play();
+                // 停止并释放媒体流
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                // 发送音频数据到后端
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.wav');
+                fetch('/speech_to_text', {
+                method: 'POST',
+                body: formData
+                }).then(response => response.json())
+                  .then(data => {
+                      console.log(data.text);
+                      const transcribedText = data.text;
+                      document.getElementById('inputText').value = "";
+                      document.getElementById('inputText').value = transcribedText;
+                      addMessageToChatbox('User (ASR)', transcribedText);
+                      sendMessage();
+                  });
+            };
+        }
+
+        function updateProgressBar() {
+            const elapsed = (Date.now() - recordingStartTime) / 1000;
+            const progress = Math.min((elapsed / 60) * 100, 100); // Assuming max 1 minute recording
+            progressBarFill.style.width = `${progress}%`;
+        }
+
+        function playLastMessage() {
+            if (lastMessageAudioUrl) {
+                const audioElement = document.getElementById('audioPlayback');
+                audioElement.src = lastMessageAudioUrl;
+                audioElement.play();
+            }
+        }
+    </script>
+</body>
+</html>

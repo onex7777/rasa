@@ -1,4 +1,4 @@
-<h1 align="center">基于RASA的中文任务型机器人</h1>
+<h1 align="center">基于RASA的中文医疗闲聊任务型机器人</h1>
 <div align="center">
 
 [![Static Badge](https://img.shields.io/badge/rasa-3.6.20-blue)](https://github.com/RasaHQ/rasa)
@@ -44,19 +44,9 @@
 | pipeline       | 流水线组件配置                                                                           |
 | server         | 前后端服务                                                                               |
 | source         | RASA 源代码，只是用来调试 DIET 的*(:з」∠)*                                               |
-| document       | langchain 学习的知识库                                                                   |
-| .env           | 相关环境变量，主要用于 API                                                               |
+| document       | langchain 学习的知识库                                                                   |                                                    |
 
-#### .env 文件如下：
 
-```
-SENIVERSE_KEY=
-NEWS_KEY=
-Exchange_KEY=
-TIANAPI_KEY=
-OPENAI_API=
-OPENAI_URL=https://api.openai.com/v1
-```
 
 <hr/>
 
@@ -66,19 +56,19 @@ OPENAI_URL=https://api.openai.com/v1
 
 </h3>
 
-| 功能         | 描述         | API 来源                               | 数据来源  | 说明   |
-| ------------ | ------------ | -------------------------------------- | --------- | ------ |
-| 闲聊         | 简易打招呼   |                                        | -         | -      |
-| 任务型       | 查询天气     | [心知天气](https://www.seniverse.com/) | -         | -      |
-| 任务型       | 查询快递     | [快递网](http://www.kuaidi.com/)       | -         | -      |
-| 任务型       | 查询车票     | [12306](https://kyfw.12306.cn/)        | smp2019   | -      |
-| 任务型       | 查询新闻     | [聚合](https://www.juhe.cn/)           | -         | -      |
-| 任务型       | 微博热搜     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 任务型       | 今日头条     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 任务型       | 查询汇率     | [聚合](https://www.juhe.cn/)           | -         | -      |
-| 任务型       | 食物营养     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 知识图谱问答 | 电影知识图谱 |                                        | 豆瓣      | 编写中 |
-| 未知意图处理 | 未知意图处理 | langchain                              | langchain | -      |
+| 功能         | 描述       | API 来源                               | 数据来源      | 说明  |
+| ------------ |----------| -------------------------------------- |-----------|-----|
+| 闲聊         | 简易打招呼    |                                        | -         | -   |
+| 任务型       | 查询天气     | [心知天气](https://www.seniverse.com/) | -         | -   |
+| 任务型       | 查询快递     | [快递网](http://www.kuaidi.com/)       | -         | -   |
+| 任务型       | 查询车票     | [12306](https://kyfw.12306.cn/)        | smp2019   | -   |
+| 任务型       | 查询新闻     | [聚合](https://www.juhe.cn/)           | -         | -   |
+| 任务型       | 微博热搜     | [天行](https://www.tianapi.com/)       | -         | -   |
+| 任务型       | 今日头条     | [天行](https://www.tianapi.com/)       | -         | -   |
+| 任务型       | 查询汇率     | [聚合](https://www.juhe.cn/)           | -         | -   |
+| 任务型       | 食物营养     | [天行](https://www.tianapi.com/)       | -         | -   |
+| 知识图谱问答 | 中文医疗知识图谱 |                                        | -         | -   |
+| 未知意图处理 | 未知意图处理   | langchain                              | langchain | -   |
 
 <hr/>
 
@@ -104,13 +94,11 @@ OPENAI_URL=https://api.openai.com/v1
 
 `rasa train --domain domain --num-threads 12`
 
-## 开启 action 服务器
-
-`rasa run actions`
-
 ## 使用
 
-`rasa shell`
+`python rasa_mode.py`
+
+支持训练、测试、交互， 支持ASR和TTS、链接大模型
 
 <hr />
 
@@ -121,8 +109,9 @@ OPENAI_URL=https://api.openai.com/v1
 </h3>
 
 ## 启动 neo4j
+cmd中运行 neo4j.bat
 
-`neo4j console`
+`neo4j.bat console`
 
 ## 导出数据
 
@@ -199,7 +188,7 @@ _微调模型时通常需要比从头开始训练时更少的迭代次数（epoc
 
 </h3>
 
-`python server/start_services.py `
+`python rasa_mode.py `
 
 功能多一点的：[rasa 简易前端](https://github.com/lyirs/rasa_web)
 
