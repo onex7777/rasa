@@ -31,21 +31,23 @@
 
 </h3>
 
-| 文件           | 描述                                                                                     |
-| -------------- | ---------------------------------------------------------------------------------------- |
-| actions        | 自定义动作服务器                                                                         |
-| components     | 自定义组件                                                                               |
-| data/nlu       | Rasa NLU 的训练数据                                                                      |
-| data/rules     | Rasa 规则数据                                                                            |
-| data/stories   | Rasa 故事数据                                                                            |
+| 文件             | 描述                                              |
+|----------------|-------------------------------------------------|
+| actions        | 自定义动作服务器                                        |
+| components     | 自定义组件                                           |
+| data/nlu       | Rasa NLU 的训练数据                                  |
+| data/rules     | Rasa 规则数据                                       |
+| data/stories   | Rasa 故事数据                                       |
 | domain         | 领域指定了 rasa 应该知道的意图、实体、插槽、响应、表单和动作。它还定义了会话会话的配置。 |
-| knowledgeGraph | 知识图谱数据。                                                                           |
-| models         | 训练的模型数据                                                                           |
-| pipeline       | 流水线组件配置                                                                           |
-| server         | 前后端服务                                                                               |
-| source         | RASA 源代码，只是用来调试 DIET 的*(:з」∠)*                                               |
-| document       | langchain 学习的知识库                                                                   |                                                    |
-
+| knowledgeGraph | 知识图谱数据。                                         |
+| models         | 训练的模型数据                                         |
+| pipeline       | 流水线组件配置                                         |
+| server         | 前后端服务                                           |
+| source         | RASA 源代码，只是用来调试 DIET 的*(:з」∠)*                  |
+| document       | langchain 学习的知识库                                |  
+| llm_api        | 大模型api 调用                                    |                                          |  
+| asr_tts_api    | asr_tts api 调用        
+  
 
 
 <hr/>
@@ -300,9 +302,3 @@ RUN python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/sim
     pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com
 ```
 
-本仓库 docker 下载
-
-```
-docker push lyirs/rasa:1.0
-docker run -it lyirs/rasa
-```
