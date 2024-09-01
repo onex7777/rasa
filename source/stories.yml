@@ -1,0 +1,81 @@
+
+version: "3.1"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: disease_desc
+    entities:
+    - disease: 百日咳
+    - disease: 百日咳
+  - slot_was_set:
+    - disease: 百日咳
+  - action: disease_form
+  - active_loop: disease_form
+  - slot_was_set:
+    - disease: 百日咳
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: FindTheCorrespondingDisease
+  - slot_was_set:
+    - disease: 百日咳
+  - action: utter_over
+  - intent: disease_desc
+  - intent: disease_symptom
+  - action: disease_form
+  - active_loop: disease_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: FindTheCorrespondingDisease
+  - slot_was_set:
+    - disease: 百日咳
+  - action: utter_over
+  - intent: disease_drug
+  - action: disease_form
+  - active_loop: disease_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: FindTheCorrespondingDisease
+  - slot_was_set:
+    - disease: 百日咳
+  - action: utter_over
+  - intent: disease_desc
+    entities:
+    - disease: 肺结核
+    - disease: 肺结核
+  - slot_was_set:
+    - disease: 肺结核
+  - action: disease_form
+  - active_loop: disease_form
+  - slot_was_set:
+    - disease: 肺结核
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: FindTheCorrespondingDisease
+  - slot_was_set:
+    - disease: 肺结核
+  - action: utter_over
+  - intent: disease_symptom
+    entities:
+    - disease: 百日咳
+    - disease: 百日咳
+  - slot_was_set:
+    - disease: 百日咳
+  - action: disease_form
+  - active_loop: disease_form
+  - slot_was_set:
+    - disease: 百日咳
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: FindTheCorrespondingDisease
+  - slot_was_set:
+    - disease: 百日咳
+  - action: utter_over
+  - intent: thank_you
+  - action: utter_thank_you

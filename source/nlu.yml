@@ -1,0 +1,19 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - 你好
+- intent: disease_desc
+  examples: |
+    - [百日咳][{"entity": "disease"}, {"entity": "disease"}]是什么？
+    - [肺结核][{"entity": "disease"}, {"entity": "disease"}]呢？
+- intent: disease_symptom
+  examples: |
+    - 它有什么症状嘛？
+    - [百日咳][{"entity": "disease"}, {"entity": "disease"}]有什么症状
+- intent: disease_drug
+  examples: |
+    - 它需要吃什么药才能好？
+- intent: thank_you
+  examples: |
+    - 不用了，谢谢
