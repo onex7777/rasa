@@ -3,10 +3,8 @@ import logging
 
 
 class AnswerSearcher:
-    def __init__(self):
-        # self.g = Graph("http://localhost:7474/", username="neo4j", password="2421737414")
-        self.g = Graph("http://localhost:7474", auth=("neo4j", "2421737414"))
-        logging.info("链接neo4j成功")
+    def __init__(self, g):
+        self.g = g
         self.num_limit = 20
 
     '''执行cypher查询，并返回相应结果'''

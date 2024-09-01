@@ -21,8 +21,6 @@ def run():
     # Start Rasa server
     rasa_server = subprocess.Popen(["rasa", "run", "--enable-api", "--cors", "*", "--log-file", "log/rasa.log"])
 
-    # Start Rasa server
-    http_server = subprocess.Popen(["python", "-m", "http.server"])
     # Start your backend server (e.g., Flask)
     backend_server = subprocess.Popen(["python", "server/app.py"])
 
@@ -34,7 +32,6 @@ def run():
 
     tts_server.wait()
     llm_server.wait()
-    http_server.wait()
     action_server.wait()
     rasa_server.wait()
     backend_server.wait()
@@ -43,12 +40,14 @@ def run():
 
 def interactive():
     # Start Rasa action server
+    # rasa run actions --port 5055 --actions actions --debug
+    # rasa interactive -m  models/20240818-143050-jet-skua.tar.gz --endpoints endpoints.yml --config config.yml
 
     llm_server = subprocess.Popen(["python", "server/llm_api.py"])
     action_server = subprocess.Popen(["rasa", "run", "actions", "--port", "5055", "--actions", "actions", "--debug"])
 
     interactive_server = subprocess.Popen(["rasa", "interactive", "-m", "models/20240818-143050-jet-skua.tar.gz",
-                                           "--endpoints", "endpoints.yml", "--config", "-config.yml"])
+                                           "--endpoints", "endpoints.yml", "--config", "config.yml"])
 
     llm_server.wait()
     action_server.wait()

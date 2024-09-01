@@ -54,16 +54,16 @@ def tts():
     engine.setProperty('volume', volume)
     v = Voice(id=3, name='wx', languages='Chinese', age=18, gender='女')
     engine.setProperty('voice', v)
-    engine.save_to_file(text, 'server/static/output.wav')
+    engine.save_to_file(text, 'server/output.wav')
     engine.say(text)
     engine.runAndWait()
 
-    return jsonify({'audio_url': '/server/static/output.wav'})
+    return jsonify({'audio_url': "/" + 'server/output.wav'})
 
 
 @app.route('/asr', methods=['POST'])
 def asr():
-    audio_path = "server/static/input.wav"
+    audio_path = "server/input.wav"
     if os.path.exists(audio_path):
         os.remove(audio_path)
     audio = request.files['audio']

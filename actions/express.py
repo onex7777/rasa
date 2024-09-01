@@ -52,4 +52,4 @@ class ActionSearchExpress(Action):
             text += f'物流状态：{info}' + '\n'
 
         dispatcher.utter_message(text=text)
-        return [SlotSet("number", None), SlotSet("express", None)]
+        return [SlotSet("number", number), SlotSet("express", express)]

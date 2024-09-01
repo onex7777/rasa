@@ -16,7 +16,12 @@ from typing import Any, Dict, List, Text, Optional
 import datetime
 from rasa_sdk.forms import REQUESTED_SLOT
 from rasa.core.actions.forms import FormAction
-
+from rasa_sdk.events import (
+    SlotSet,
+    UserUtteranceReverted,
+    ConversationPaused,
+    EventType,
+)
 
 class TicketFormAction(FormAction):
     def name(self) -> Text:
@@ -94,7 +99,7 @@ class ActionQueryTrain(Action):
         date_object = text_to_date(date_text)
 
         dispatcher.utter_message(f"正在为您购买「{date_object}」从「{departure}」出发到「{destination}」的车票,请问还有什么可以帮助您呢？")
-        return []
+        return [SlotSet("departure", None),SlotSet("destination", None), SlotSet("date-time", None)]
 
         # departure_code = station_map.get(departure)
         # destination_code = station_map.get(destination)

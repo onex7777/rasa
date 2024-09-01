@@ -82,7 +82,7 @@ nlu:
       - 我身体不舒服
       - 觉得很不舒服，很不自在，有点难受
       - [腹痛](symptom)
-      - 我感到[腹痛](symptom)，我想问下这个什么病导致的
+      - 我感到[头痛](symptom)和[腹痛](symptom)，我想问下这个什么病导致的
       - [肚疼]{"entity":"symptom","value":"腹痛"}
       - 我[肚疼]{"entity":"symptom","value":"腹痛"}，是什么病导致的？
       - [肚痛]{"entity":"symptom","value":"腹痛"}
@@ -105,7 +105,7 @@ nlu:
       - 我感到[腹部作痛]{"entity":"symptom","value":"腹痛"}，是什么病导致的？
       - [腹部痛]{"entity":"symptom","value":"腹痛"}
       - 我感到[腹部痛]{"entity":"symptom","value":"腹痛"}，我想问下这个什么病导致的呢
-      - [恶心](symptom)
+      - [恶心](symptom)和[头晕](symptom)
       - 感觉[恶心](symptom)，我想问下这个什么病导致的
       - [恶心想吐]{"entity":"symptom","value":"恶心"}
       - 我[恶心想吐]{"entity":"symptom","value":"恶心"}，我想问下这个什么病导致的呢

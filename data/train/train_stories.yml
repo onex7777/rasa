@@ -19,6 +19,17 @@ stories:
                 role: departure
               - address: 北京
                 role: destination
+          - intent: train_ticket
+            entities:
+              - date-time: 明天
+              - address: 北京
+                role: destination
+          - intent: train_ticket
+            entities:
+              - date-time: 今天
+              - address: 深圳
+                role: departure
+
       - action: train_query_form
       - active_loop: train_query_form
       - intent: stop

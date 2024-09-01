@@ -1,175 +1,144 @@
 version: "3.1"
 stories:
-- story: query symptom
+
+- story: query disease_to_other
   steps:
-  - intent: disease_symptom
+    - or:
+      - intent: disease_symptom
+        entities:
+          - disease: 百日咳
 
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query check
+      - intent: disease_check
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_prevent
+        entities:
+          - disease: 肺结核
+
+      - intent: disease_lasttime
+        entities:
+          - disease: 肺结核
+
+      - intent: disease_cureway
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_cureprob
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_easyget
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_desc
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_cause
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_acompany
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_department
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_drug
+        entities:
+          - disease: 中耳炎
+
+      - intent: disease_not_food
+        entities:
+          - disease: 中耳炎
+
+      - intent: disease_do_food
+        entities:
+          - disease: 百日咳
+
+      - intent: disease_name
+        entities:
+          - disease: 百日咳
+      - slot_was_set:
+          - disease: 百日咳
+
+    - action: disease_form
+    - active_loop: disease_form
+    - active_loop: null
+    - action: FindTheCorrespondingDisease
+    - action: utter_over
+
+
+- story: query food_to_disease
   steps:
-  - intent: disease_check
+    - or:
+      - intent: food_do_disease
+        entities:
+          - food: 茶叶蛋
+      - intent: food_not_disease
+        entities:
+          - food: 茶叶蛋
+      - intent: food_name
+        entities:
+          - food: 茶叶蛋
+      - slot_was_set:
+          - food: 茶叶蛋
 
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query prevent
-  steps:
-  - intent: disease_prevent
+    - action: food_form
+    - active_loop: food_form
+    - active_loop: null
+    - action: FindTheCorrespondingFood
+    - action: utter_over
 
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query lasttime
-  steps:
-  - intent: disease_lasttime
 
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query cureway
-  steps:
-  - intent: disease_cureway
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query cureprob
-  steps:
-  - intent: disease_cureprob
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query easyget
-  steps:
-  - intent: disease_easyget
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query desc
-  steps:
-  - intent: disease_desc
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query cause
-  steps:
-  - intent: disease_cause
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query acompany
-  steps:
-  - intent: disease_acompany
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-
-- story: query disease_department
-  steps:
-  - intent: disease_department
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-
-- story: query disease_drug
-  steps:
-  - intent: disease_drug
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query disease_not_food
-  steps:
-  - intent: disease_not_food
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query disease_do_food
-  steps:
-  - intent: disease_do_food
-
-  - action: disease_form
-  - active_loop: disease_form
-  - active_loop: null
-  - action: FindTheCorrespondingDisease
-  - action: utter_over
-- story: query disease
+- story: query symptom_to_disease
   steps:
   - intent: symptom_disease
-
+    entities:
+      - symptom: 腹部不适
+  - intent: symptom_name
+    entities:
+      - symptom: 腹部不适
+  - slot_was_set:
+      - symptom: 腹部不适
   - action: symptom_form
   - active_loop: symptom_form
   - active_loop: null
   - action: FindTheCorrespondingSymptom
   - action: utter_over
-- story: query check_disease
+
+
+- story: query check_to_disease
   steps:
   - intent: check_disease
-
+    entities:
+      - check: 腹水检查
+  - intent: check_name
+    entities:
+      - check: 腹水检查
+  - slot_was_set:
+      - check: 腹水检查
   - action: check_form
   - active_loop: check_form
   - active_loop: null
   - action: FindTheCorrespondingCheck
   - action: utter_over
-- story: query food_do_disease
-  steps:
-  - intent: food_do_disease
 
-  - action: food_form
-  - active_loop: food_form
-  - active_loop: null
-  - action: FindTheCorrespondingFood
-  - action: utter_over
 
-- story: query food_not_disease
-  steps:
-  - intent: food_not_disease
-
-  - action: food_form
-  - active_loop: food_form
-  - active_loop: null
-  - action: FindTheCorrespondingFood
-  - action: utter_over
-
-- story: query drug_disease
+- story: query drug_to_disease
   steps:
   - intent: drug_disease
-
+    entities:
+      - drug: 上清丸
+  - intent: drug_name
+    entities:
+      - drug: 上清丸
+  - slot_was_set:
+      - drug: 上清丸
   - action: drug_form
   - active_loop: drug_form
   - active_loop: null

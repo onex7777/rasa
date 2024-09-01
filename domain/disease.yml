@@ -5,6 +5,7 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+
 - disease_symptom:
     use_entities: true
 - symptom_disease:
@@ -47,8 +48,20 @@ intents:
     use_entities: true
 - smallTalk:
     use_entities: []
-- get_nutrient:
+
+- check_name:
     use_entities: true
+- disease_name:
+    use_entities: true
+- drug_name:
+    use_entities: true
+- food_name:
+    use_entities: true
+- symptom_name:
+    use_entities: true
+- department_name:
+    use_entities: true
+
 
 entities:
 - disease
@@ -58,6 +71,7 @@ entities:
 - symptom
 - location
 - date-time
+- department
 
 
 slots:
@@ -81,7 +95,6 @@ slots:
     mappings:
       - type: from_entity
         entity: drug
-      
     influence_conversation: true
   food:
     type: text
@@ -115,6 +128,13 @@ slots:
         entity: date-time
     influence_conversation: false
 
+  department:
+    type: text
+    initial_value: null
+    mappings:
+      - type: from_entity
+        entity: department
+    influence_conversation: false
 
 
 responses:
@@ -137,6 +157,8 @@ responses:
     - text: 您想查询哪个地方
   utter_ask_date-time:
     - text: 您想查询什么时间
+  utter_ask_other_symptom:
+    - text: 您还有什么症状呢？
 
 
 actions:
@@ -155,6 +177,7 @@ actions:
 - utter_default
 - utter_ask_location
 - utter_ask_date-time
+- utter_ask_other_symptom
 
 
 
@@ -176,6 +199,9 @@ forms:
   symptom_form:
     required_slots:
       - symptom
+  department_form:
+    required_slots:
+      - department
 
 
 

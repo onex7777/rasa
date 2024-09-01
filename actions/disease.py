@@ -42,14 +42,21 @@ from actions.api import weather
 from actions.api import app
 import subprocess
 import datetime
-
-USER_INTENT_OUT_OF_SCOPE = "out_of_scope"
+import warnings
+import logging
+from py2neo import Graph
 import logging
 
-logger = logging.getLogger(__name__)
+warnings.filterwarnings("ignore")
+USER_INTENT_OUT_OF_SCOPE = "out_of_scope"
+
+g = Graph("http://localhost:7474", auth=("neo4j", "2421737414"))
+logging.info("链接neo4j成功")
+
+# logger = logging.getLogger(__name__)
 
 parser = question_parser.QuestionPaser()
-searcher = answer_search.AnswerSearcher()
+searcher = answer_search.AnswerSearcher(g)
 
 class FindTheCorrespondingDisease(Action):
     def name(self) -> Text:
@@ -62,10 +69,12 @@ class FindTheCorrespondingDisease(Action):
             domain: DomainDict,
     ) -> List[EventType]:
         disease = tracker.get_slot('disease')  # 获取疾病实体'
+
         logging.info('disease: %s', disease)
         intentions = tracker.get_intent_of_latest_message()  # 获取意图
         if type(disease) != list:
-            data = {'args': {disease: ['disease']}, 'question_types': [intentions]}
+
+                data = {'args': {disease: ['disease']}, 'question_types': [intentions]}
         else:
             data = {'args': {disease[0]: ['disease']}, 'question_types': [intentions]}
 
@@ -146,7 +155,6 @@ class FindTheCorrespondingCheck(Action):
             data = {'args': {check: ['check']}, 'question_types': [intentions]}
         else:
             data = {'args': {check[0]: ['check']}, 'question_types': [intentions]}
-
 
         sqls = parser.parser_main(data)  # 生成相关的查询语句
         logging.info("Check生成的sql语句为：", sqls)

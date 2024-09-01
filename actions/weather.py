@@ -6,7 +6,12 @@ import os
 import requests
 import json
 from requests import ConnectionError, HTTPError, TooManyRedirects, Timeout
-
+from rasa_sdk.events import (
+    SlotSet,
+    UserUtteranceReverted,
+    ConversationPaused,
+    EventType,
+)
 # from dotenv import load_dotenv
 #
 # load_dotenv()
@@ -162,4 +167,5 @@ class ActionWeatherForm(Action):
             else:
                 dispatch.utter_message(weather_data)
 
-        return []
+        return [SlotSet("address", None),
+                SlotSet("date-time", None)]

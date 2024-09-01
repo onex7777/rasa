@@ -43,8 +43,8 @@ def send_message():
     message = data.get('message', '')
     response = requests.post(f"{RASA_SERVER_URL}/webhooks/rest/webhook", json={'message': message})
     rasa_responses = response.json()
+    # Rasa多轮输出
     try:
-        # Rasa多轮输出
         replies = []
         for msg in rasa_responses:
             if 'text' in msg:

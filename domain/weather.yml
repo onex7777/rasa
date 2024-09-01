@@ -11,8 +11,8 @@ slots:
     type: text
     influence_conversation: false
     mappings:
-      - entity: address
-        type: from_entity
+      - type: from_entity
+        entity: address
       - type: from_entity
         entity: address
         intent: info_address
@@ -20,8 +20,9 @@ slots:
     type: text
     influence_conversation: false
     mappings:
-      - entity: date-time
-        type: from_entity
+      - type: from_entity
+        entity: date-time
+
 
 responses:
   utter_ask_address:

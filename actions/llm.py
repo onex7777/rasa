@@ -10,7 +10,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import requests
-
+import logging
 
 Qwen_URL = 'http://127.0.0.1:8002'
 headers = {"Content-Type": "application/json"}
@@ -72,7 +72,11 @@ class ActionLocalLlm(Action):
             response = requests.post(Qwen_URL, headers=headers, json=prompt)
             if response.status_code == 200:
                 answer = response.text
-                dispatcher.utter_message(text=answer)
+                if len(answer) > 0:
+                    logging.info("大模型输出结果为：")
+                    dispatcher.utter_message(text=answer)
+                else:
+                    dispatcher.utter_message(text="不好意思，我没听清楚您说什么，可以再详细说一遍吗？")
                 return []
             else:
                 print(f"Error: {response.status_code}")
