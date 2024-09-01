@@ -1,4 +1,4 @@
-<h1 align="center">基于RASA的中文任务型机器人</h1>
+<h1 align="center">基于RASA的中文医疗多轮任务型机器人</h1>
 <div align="center">
 
 [![Static Badge](https://img.shields.io/badge/rasa-3.6.20-blue)](https://github.com/RasaHQ/rasa)
@@ -31,8 +31,8 @@
 
 </h3>
 
-| 文件           | 描述                                                                                     |
-| -------------- | ---------------------------------------------------------------------------------------- |
+| 文件             | 描述                                                                                     |
+|----------------| ---------------------------------------------------------------------------------------- |
 | actions        | 自定义动作服务器                                                                         |
 | components     | 自定义组件                                                                               |
 | data/nlu       | Rasa NLU 的训练数据                                                                      |
@@ -45,8 +45,9 @@
 | server         | 前后端服务                                                                               |
 | source         | RASA 源代码，只是用来调试 DIET 的*(:з」∠)*                                               |
 | document       | langchain 学习的知识库                                                                   |
-| .env           | 相关环境变量，主要用于 API                                                               |
-
+| .env           | 相关环境变量，主要用于 API   <br/>                                                            |
+| asr_tts.py     |  ASR与TTS 
+| llm_api.py     | 大模型 
 #### .env 文件如下：
 
 ```
@@ -66,20 +67,20 @@ OPENAI_URL=https://api.openai.com/v1
 
 </h3>
 
-| 功能         | 描述         | API 来源                               | 数据来源  | 说明   |
-| ------------ | ------------ | -------------------------------------- | --------- | ------ |
-| 闲聊         | 简易打招呼   |                                        | -         | -      |
-| 任务型       | 查询天气     | [心知天气](https://www.seniverse.com/) | -         | -      |
-| 任务型       | 查询快递     | [快递网](http://www.kuaidi.com/)       | -         | -      |
-| 任务型       | 查询车票     | [12306](https://kyfw.12306.cn/)        | smp2019   | -      |
-| 任务型       | 查询新闻     | [聚合](https://www.juhe.cn/)           | -         | -      |
-| 任务型       | 微博热搜     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 任务型       | 今日头条     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 任务型       | 查询汇率     | [聚合](https://www.juhe.cn/)           | -         | -      |
-| 任务型       | 食物营养     | [天行](https://www.tianapi.com/)       | -         | -      |
-| 知识图谱问答 | 电影知识图谱 |                                        | 豆瓣      | 编写中 |
-| 未知意图处理 | 未知意图处理 | langchain                              | langchain | -      |
-
+| 功能        | 描述     | API 来源                               | 数据来源  | 说明   |
+|-----------|--------| -------------------------------------- | --------- | ------ |
+| 闲聊        | 简易打招呼  |                                        | -         | -      |
+| 任务型       | 查询天气   | [心知天气](https://www.seniverse.com/) | -         | -      |
+| 任务型       | 查询快递   | [快递网](http://www.kuaidi.com/)       | -         | -      |
+| 任务型       | 查询车票   | [12306](https://kyfw.12306.cn/)        | smp2019   | -      |
+| 任务型       | 查询新闻   | [聚合](https://www.juhe.cn/)           | -         | -      |
+| 任务型       | 微博热搜   | [天行](https://www.tianapi.com/)       | -         | -      |
+| 任务型       | 今日头条   | [天行](https://www.tianapi.com/)       | -         | -      |
+| 任务型       | 查询汇率   | [聚合](https://www.juhe.cn/)           | -         | -      |
+| 任务型       | 食物营养   | [天行](https://www.tianapi.com/)       | -         | -      |
+| 未知意图处理    | 未知意图处理 | langchain                              | langchain | -      |
+| LLM       | 闲聊     | llm        
+| ASR、TTS   | 语音     | asr、tts       
 <hr/>
 
 <h3 align="center">
@@ -199,7 +200,7 @@ _微调模型时通常需要比从头开始训练时更少的迭代次数（epoc
 
 </h3>
 
-`python server/start_services.py `
+`python rasa_mode.py `
 
 功能多一点的：[rasa 简易前端](https://github.com/lyirs/rasa_web)
 
@@ -311,9 +312,3 @@ RUN python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/sim
     pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com
 ```
 
-本仓库 docker 下载
-
-```
-docker push lyirs/rasa:1.0
-docker run -it lyirs/rasa
-```
